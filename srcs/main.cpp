@@ -18,14 +18,19 @@ Vertex vertices[] = {
 
 unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
+// GLuint indices[] = {
+//     0, 1, 2,
+//     0, 2, 3,
+// };
 GLuint indices[] = {
-    0, 1, 2,
-    0, 2, 3,
+    2, 1, 0,
+    3, 2, 0,
     0, 1, 4,
     1, 2, 4,
     2, 3, 4,
     3, 0, 4
 };
+
 unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
 
 GLenum DRAW_MODE;
@@ -39,6 +44,43 @@ void updateInput(GLFWwindow *window) {
         DRAW_MODE = GL_LINE;
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         DRAW_MODE = GL_POINT;
+}
+
+void updateTransformation(GLFWwindow *window, Mat4 &ModelMatrix) {
+
+    // Translation with WASD and QE
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, 0.f, -0.01f));
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, 0.f, 0.01f));
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(-0.01f, 0.f, 0.f));
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.01f, 0.f, 0.f));
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, 0.01f, 0.f));
+        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+            ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, -0.01f, 0.f));
+    }
+
+    // Rotation with arrow keys and page up/down
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(1.0f), Vec3(1.f, 0.f, 0.f));
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(-1.0f), Vec3(1.f, 0.f, 0.f));
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(1.0f), Vec3(0.f, 1.f, 0.f));
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(-1.0f), Vec3(0.f, 1.f, 0.f));
+    if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(1.0f), Vec3(0.f, 0.f, 1.f));
+    if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(-1.0f), Vec3(0.f, 0.f, 1.f));
+    
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+        ModelMatrix.reset();
+
 }
 
 bool loadShaders(GLuint &core_program) {
@@ -252,6 +294,7 @@ int main() {
 
         // UPDATE INPUT
         updateInput(window);
+        updateTransformation(window, ModelMatrix);
 
         //CLEAR
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -265,8 +308,8 @@ int main() {
         // Move, Rotate, Scale
         ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, 0.f, 0.f));
         ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.0f), Vec3(1.f, 0.f, 0.f));
-        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.1f), Vec3(0.f, 1.f, 0.f));
-        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.1f), Vec3(0.f, 0.f, 1.f));
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.0f), Vec3(0.f, 1.f, 0.f));
+        ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.0f), Vec3(0.f, 0.f, 1.f));
         ModelMatrix = ModelMatrix.scale(ModelMatrix, Vec3(1.f));
         glUniformMatrix4fv(glGetUniformLocation(core_program, "ModelMatrix"), 1, GL_FALSE, ModelMatrix.m);
 

@@ -45,6 +45,15 @@ struct Mat4 {
         m[15] = diag;
     }
 
+    void reset(float diag = 1.0f) {
+        for (int i = 0; i < 16; i++)
+            m[i] = 0.0f;
+        m[0] = diag;
+        m[5] = diag;
+        m[10] = diag;
+        m[15] = diag;
+    }
+
     // Surcharge operator for matrix
     Mat4 operator*(const Mat4 &other) const {
         Mat4 res(0.f);
