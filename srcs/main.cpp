@@ -1,4 +1,4 @@
-//valgrind --leak-check=full --show-leak-kinds=definite,indirect ./scop
+//valgrind --leak-check=full --show-leak-kinds=definite,indirect --suppressions=valgrind.supp ./scop
 
 #include "libs.hpp"
 
