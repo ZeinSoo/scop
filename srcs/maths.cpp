@@ -19,7 +19,36 @@ struct Vec3 {
     Vec3(): x(0.0f), y(0.0f), z(0.0f) {}
     Vec3(float x, float y, float z): x(x), y(y), z(z) {}
     Vec3(float v): x(v), y(v), z(v) {}
+
+    Vec3 normalize() const {
+        float len = sqrt(x*x + y*y + z*z);
+        return Vec3(x / len, y / len, z / len);
+    }
+
+    Vec3 opposite() const {
+        return Vec3(-x, -y, -z);
+    }
+
+    Vec3 operator+(const Vec3 &other) const {
+        return Vec3(this->x + other.x, this->y + other.y, this->z + other.z);
+    }
+
+    Vec3 operator-(const Vec3 &other) const {
+        return Vec3(this->x - other.x, this->y - other.y, this->z - other.z);
+    }
 };
+
+float dot(const Vec3 &a, const Vec3 &b) {
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+Vec3 cross(const Vec3 &a, const Vec3 &b) {
+    return Vec3(
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x
+    );
+}
 
 struct Vertex {
     Vec3 position;
@@ -113,6 +142,49 @@ struct Mat4 {
         R[15] = 1.f;
 
         return base * R;
+    }
+
+    Mat4 lookAt(const Vec3 &eye, const Vec3 &center, const Vec3 &up) {
+        Mat4 res(0.f);
+        Vec3 f = (eye - center).normalize();
+        Vec3 r = cross(up, f).normalize();
+        Vec3 u = cross(f, r);
+
+        res[0] = r.x;
+        res[1] = u.x;
+        res[2] = f.x;
+        res[3] = 0.f;
+
+        res[4] = r.y;
+        res[5] = u.y;
+        res[6] = f.y;
+        res[7] = 0.f;
+
+        res[8] = r.z;
+        res[9] = u.z;
+        res[10] = f.z;
+        res[11] = 0.f;
+
+        res[12] = -dot(r, eye);
+        res[13] = -dot(u, eye);
+        res[14] = -dot(f, eye);
+        res[15] = 1.f;
+        return res;
+    }
+
+    Mat4 perspective(float fov, float aspect, float near, float far) {
+        Mat4 res(0.f);
+
+        float tanHalfFov = tan(fov / 2.f);
+        float top = near * tanHalfFov;
+        float right = top * aspect;
+
+        res[0] = near / right;
+        res[5] = near / top;
+        res[10] = -(far + near) / (far - near);
+        res[11] = -1.f;
+        res[14] = -(2.f * far * near) / (far - near);
+        return res;
     }
 
     // Accessors

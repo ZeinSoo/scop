@@ -2,12 +2,21 @@
 
 #include "libs.hpp"
 
+// SQUARE
 // Vertex vertices[] = {
 //     Vec3(-0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f),  
 //     Vec3(-0.5f, -0.5f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f),
 //     Vec3(0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(1.0f, 0.0f),
 //     Vec3(0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f)
 // };
+
+// GLuint indices[] = {
+//     0, 1, 2,
+//     0, 2, 3,
+// };
+
+
+// PYRAMID 
 Vertex vertices[] = {
     Vec3(-0.5f, 0.f, 0.5f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 1.0f),
     Vec3(-0.5f, 0.f, -0.5f), Vec3(0.0f, 1.0f, 0.0f), Vec2(0.0f, 1.0f),
@@ -16,12 +25,6 @@ Vertex vertices[] = {
     Vec3(0.f, 0.5f, 0.f), Vec3(1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)
 };
 
-unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
-
-// GLuint indices[] = {
-//     0, 1, 2,
-//     0, 2, 3,
-// };
 GLuint indices[] = {
     2, 1, 0,
     3, 2, 0,
@@ -30,6 +33,69 @@ GLuint indices[] = {
     2, 3, 4,
     3, 0, 4
 };
+
+// CUBE
+// Vertex vertices[] = {
+//     Vec3(-0.5f, -0.5f, 0.5f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), // 0
+//     Vec3(0.5f, -0.5f, 0.5f), Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f),  // 1
+//     Vec3(0.5f, 0.5f, 0.5f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0f, 1.0f),   // 2
+//     Vec3(-0.5f, 0.5f, 0.5f), Vec3(1.0f, 1.0f, 0.0f), Vec2(0.0f, 1.0f),  // 3
+//     Vec3(-0.5f, -0.5f, -0.5f), Vec3(1.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), // 4
+//     Vec3(0.5f, -0.5f, -0.5f), Vec3(0.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f),  // 5
+//     Vec3(0.5f, 0.5f, -0.5f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f),   // 6
+//     Vec3(-0.5f, 0.5f, -0.5f), Vec3(0.2f, 0.2f, 0.2f), Vec2(0.0f, 1.0f)    // 7
+// };
+
+// GLuint indices[] = {
+//     // Front (+Z)
+//     0, 1, 2,
+//     0, 2, 3,
+//     4, 6, 5,
+//     4, 7, 6,
+//     4, 0, 3,
+//     4, 3, 7,
+//     1, 5, 6,
+//     1, 6, 2,
+//     3, 2, 6,
+//     3, 6, 7,
+//     4, 5, 1,
+//     4, 1, 0
+// };
+
+// PAVE DROIT 
+// Vertex vertices[] = {
+//     Vec3(-0.5f, -0.25f, 0.75f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), // 0
+//     Vec3(0.5f, -0.25f, 0.75f), Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f),  // 1
+//     Vec3(0.5f, 0.25f, 0.75f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0f, 1.0f),   // 2
+//     Vec3(-0.5f, 0.25f, 0.75f), Vec3(1.0f, 1.0f, 0.0f), Vec2(0.0f, 1.0f),  // 3
+//     Vec3(-0.5f, -0.25f, -0.75f), Vec3(1.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), // 4
+//     Vec3(0.5f, -0.25f, -0.75f), Vec3(0.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f),  // 5
+//     Vec3(0.5f, 0.25f, -0.75f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f),   // 6
+//     Vec3(-0.5f, 0.25f, -0.75f), Vec3(0.2f, 0.2f, 0.2f), Vec2(0.0f, 1.0f)    // 7
+// };
+
+// GLuint indices[] = {
+//     // Front (+Z)
+//     0, 1, 2,
+//     0, 2, 3,
+//     // Back (-Z)
+//     4, 6, 5,
+//     4, 7, 6,
+//     // Left (-X)
+//     4, 0, 3,
+//     4, 3, 7,
+//     // Right (+X)
+//     1, 5, 6,
+//     1, 6, 2,
+//     // Top (+Y)
+//     3, 2, 6,
+//     3, 6, 7,
+//     // Bottom (-Y)
+//     4, 5, 1,
+//     4, 1, 0
+// };
+
+unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
 unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
 
@@ -274,7 +340,7 @@ int main() {
 
     // TEXTURE INIT (TO DO)
 
-    // Model Matrix
+    // INIT Model Matrix
 
     Mat4 ModelMatrix(1.f);
     ModelMatrix = ModelMatrix.translate(ModelMatrix, Vec3(0.f, 0.f, 0.f));
@@ -282,9 +348,49 @@ int main() {
     ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.f), Vec3(0.f, 1.f, 0.f));
     ModelMatrix = ModelMatrix.rotate(ModelMatrix, radians(0.f), Vec3(0.f, 0.f, 1.f));
     ModelMatrix = ModelMatrix.scale(ModelMatrix, Vec3(1.f));
+
+    // INIT View Matrix
+    Vec3 camPos(0.f, 0.f, 1.f);
+    Vec3 worldUp(0.f, 1.f, 0.f);
+    Vec3 camFront(0.f, 0.f, -1.f);
+    Mat4 ViewMatrix(1.f);
+    ViewMatrix = ViewMatrix.lookAt(camPos, camPos + camFront, worldUp);
+
+    // INIT Projection Matrix
+    float fov = 90.f;
+    float nearPlane = 0.1f;
+    float farPlane = 1000.f;
+
+    Mat4 ProjectionMatrix(1.f);
+    ProjectionMatrix = ProjectionMatrix.perspective(
+        radians(fov), 
+        static_cast<float>(framebufferWidth) / static_cast<float>(framebufferHeight), 
+        nearPlane, 
+        farPlane
+    );
+
+    // glm::mat4 glmModelMatrix(1.f);
+    // glmModelMatrix = glm::translate(glmModelMatrix, glm::vec3(0.f, 0.f, 0.f));
+    // glmModelMatrix = glm::rotate(glmModelMatrix, radians(0.f), glm::vec3(1.f, 0.f, 0.f));
+    // glmModelMatrix = glm::rotate(glmModelMatrix, radians(0.f), glm::vec3(0.f, 1.f, 0.f));
+    // glmModelMatrix = glm::rotate(glmModelMatrix, radians(0.f), glm::vec3(0.f, 0.f, 1.f));
+    // glmModelMatrix = glm::scale(glmModelMatrix, glm::vec3(1.f));
+
+    // glm::vec3 glmCamPos(0.f);
+    // glm::vec3 glmWorldUp(0.f, 1.f, 0.f);
+    // glm::vec3 glmCamFront(0.f, 0.f, -1.f);
+    // glm::mat4 glmViewMatrix(1.f);
+    // glmViewMatrix = glm::lookAt(glmCamPos, glmCamPos + glmCamFront, glmWorldUp);
+    // glm::vec3 glmCenter = glmCamPos + glmCamFront;
+    // std::cout << glmViewMatrix << std::endl;
+
+    // INIT UNIFORMS
     glUseProgram(core_program);
 
     glUniformMatrix4fv(glGetUniformLocation(core_program, "ModelMatrix"), 1, GL_FALSE, ModelMatrix.m);
+    glUniformMatrix4fv(glGetUniformLocation(core_program, "ViewMatrix"), 1, GL_FALSE, ViewMatrix.m);
+    glUniformMatrix4fv(glGetUniformLocation(core_program, "ProjectionMatrix"), 1, GL_FALSE, ProjectionMatrix.m);
+
 
     glUseProgram(0);
 
