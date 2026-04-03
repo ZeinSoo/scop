@@ -3,7 +3,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../srcs/maths.cpp"
+#include "maths.hpp"
+
+#include "Shader.hpp"
+#include "OBJLoader.hpp"
+#include "Texture.hpp"
 
 #include <iostream>
 #include <fstream>
