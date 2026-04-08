@@ -5,9 +5,12 @@
 
 #include "maths.hpp"
 
-#include "Shader.hpp"
 #include "OBJLoader.hpp"
+#include "Shader.hpp"
 #include "Texture.hpp"
+#include "Material.hpp"
+#include "Mesh.hpp"
+#include "Primitives.hpp"
 
 #include <iostream>
 #include <fstream>

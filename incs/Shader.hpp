@@ -31,4 +31,5 @@ class Shader {
         void setVec3f(Vec3 vec, const GLchar *name) const;
         void setMat4f(Mat4 mat, const GLchar *name, bool transpose = GL_FALSE) const;
         void set1i(GLint value, const GLchar *name) const;
+        void set1f(float value, const GLchar *name) const;
 };

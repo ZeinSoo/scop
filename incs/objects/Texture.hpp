@@ -15,15 +15,13 @@ class Texture {
         int width;
         int height;
         unsigned int type;
-        GLint textureUnit;
 
     public:
-        Texture(const char *filePath, GLenum type, GLint texture_unit);
+        Texture(const char *filePath, GLenum type);
         ~Texture();
         void loadFromFile(const char *filePath);
         GLuint getID() const;
-        void bind();
+        void bind(GLint texture_unit);
         void unbind();
-        GLint getTextureUnit() const;
 
 };

@@ -5,14 +5,24 @@
 NAME        = scop
 
 CXX         = c++
-CFLAGS      = -Wall -Wextra -g3 -MMD -MP -std=c++20 ##-DGLM_ENABLE_EXPERIMENTAL
+CFLAGS      = -Wall -Wextra -Werror -g3 -MMD -MP -std=c++20 ##-DGLM_ENABLE_EXPERIMENTAL
 
-INCLUDES    = -Iincs -Ilibs/include ##-Iglm
+INCLUDES    = -Iincs -Iincs/loaders -Iincs/objects -Ilibs/include ##-Iglm
 
 SRCDIR      = srcs/
 OBJDIR      = .obj/
 
-SRCS        = main.cpp
+SRCS        = 	loaders/BMPLoader.cpp\
+				loaders/OBJLoader.cpp\
+				main.cpp\
+				Engine.cpp\
+				Shader.cpp\
+				maths.cpp\
+				objects/Material.cpp\
+				objects/Mesh.cpp\
+				objects/Primitives.cpp\
+				objects/Texture.cpp
+
 OBJS        = $(addprefix $(OBJDIR), $(SRCS:.cpp=.o))
 DEPS        = $(OBJS:.o=.d)
 
@@ -40,7 +50,7 @@ $(NAME): $(OBJS)
 # **************************************************************************** #
 
 $(OBJDIR)%.o: $(SRCDIR)%.cpp
-	mkdir -p $(OBJDIR)
+	mkdir -p $(dir $@)
 	$(CXX) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 -include $(DEPS)

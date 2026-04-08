@@ -1,8 +1,7 @@
 #include "Texture.hpp"
 
-Texture::Texture(const char *filePath, GLenum type, GLint texture_unit) {
+Texture::Texture(const char *filePath, GLenum type) {
     this->type = type;
-    this->textureUnit = texture_unit;
     unsigned char *imageData = loadTexture(filePath, &this->width, &this->height);
     if (!imageData) {
         std::cout << "ERROR::TEXTURE::TEXTURE_LOADING_FAILED: " << filePath <<  std::endl;
@@ -46,6 +45,9 @@ void Texture::loadFromFile(const char *filePath) {
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+    // glTexParameteri(this->type, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(this->type, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
     glTexParameteri(this->type, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(this->type, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(this->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -63,17 +65,13 @@ GLuint Texture::getID() const {
     return this->id;
 }
 
-void Texture::bind() {
+void Texture::bind(GLint texture_unit) {
     // glActiveTexture(GL_TEXTURE0 + texture_unit);
     // glBindTexture(type, this->id);
 
-    glBindTextureUnit(this->textureUnit, this->id);
+    glBindTextureUnit(texture_unit, this->id);
 }
 
 void Texture::unbind() {
     glBindTextureUnit(0, 0);
-}
-
-GLint Texture::getTextureUnit() const {
-    return this->textureUnit;
 }

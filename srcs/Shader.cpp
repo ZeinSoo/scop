@@ -109,5 +109,11 @@ void Shader::setMat4f(Mat4 mat, const GLchar *name, bool transpose) const {
 void Shader::set1i(GLint value, const GLchar *name) const {
     const GLint location = glGetUniformLocation(this->id, name);
     if (location != -1)
-        glUniform1i(location, value);
+        glProgramUniform1i(this->id, location, value);
+}
+
+void Shader::set1f(GLfloat value, const GLchar *name) const {
+    const GLint location = glGetUniformLocation(this->id, name);
+    if (location != -1)
+        glProgramUniform1f(this->id, location, value);
 }
