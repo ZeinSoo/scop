@@ -49,10 +49,10 @@ unsigned Primitive::getNrOfIndices() const{
 
 Quad::Quad() : Primitive() {
     Vertex vertices[] = {
-        Vec3(-0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f), Vec3(0.f, 0.f, 1.f),
-        Vec3(-0.5f, -0.5f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
-        Vec3(0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
-        Vec3(0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f)
+        {Vec3(-0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f), Vec3(0.f, 0.f, 1.f)},
+        {Vec3(-0.5f, -0.5f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.5f, 0.5f, 0.0f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f)}
     };
     unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
@@ -74,9 +74,9 @@ Quad::Quad() : Primitive() {
 
 Triangle::Triangle() : Primitive() {
     Vertex vertices[] = {
-        Vec3(-0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
-        Vec3(0.5f, -0.5f, 0.0f),  Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
-        Vec3(0.0f, 0.5f, 0.0f),   Vec3(0.0f, 0.0f, 1.0f), Vec2(0.5f, 1.0f), Vec3(0.f, 0.f, 1.f)
+        {Vec3(-0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.5f, -0.5f, 0.0f),  Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.0f, 0.5f, 0.0f),   Vec3(0.0f, 0.0f, 1.0f), Vec2(0.5f, 1.0f), Vec3(0.f, 0.f, 1.f)}
     };
     unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
@@ -98,11 +98,11 @@ Triangle::Triangle() : Primitive() {
 Pyramid::Pyramid() : Primitive() {
     Vertex vertices[] = {
         //Position                  //Color                  //TexCoords              //Normal
-        Vec3(-0.5f, 0.f, 0.5f),     Vec3(1.f, 0.f, 0.f),    Vec2(1.0f, 0.0f),       Vec3(0.f, 0.f, 1.f),                                          
-        Vec3(-0.5f, 0.f, -0.5f),    Vec3(0.f, 1.f, 0.f),    Vec2(1.0f, 0.0f),       Vec3(0.f, 0.f, 1.f),
-        Vec3(0.5f, 0.f, -0.5f),     Vec3(0.f, 0.f, 1.f),    Vec2(0.0f, 1.0f),       Vec3(0.f, 0.f, 1.f),
-        Vec3(0.5f, 0.f, 0.5f),      Vec3(1.f, 0.f, 1.f),    Vec2(0.0f, 1.0f),       Vec3(0.f, 0.f, 1.f),
-        Vec3(0.f, 0.5f, 0.f),       Vec3(1.f, 1.f, 1.f),    Vec2(0.5f, 0.5f),       Vec3(0.f, 0.f, 1.f)
+        {Vec3(-0.5f, 0.f, 0.5f),     Vec3(1.f, 0.f, 0.f),    Vec2(1.0f, 0.0f),       Vec3(0.f, 0.f, 1.f)},                                          
+        {Vec3(-0.5f, 0.f, -0.5f),    Vec3(0.f, 1.f, 0.f),    Vec2(1.0f, 0.0f),       Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.5f, 0.f, -0.5f),     Vec3(0.f, 0.f, 1.f),    Vec2(0.0f, 1.0f),       Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.5f, 0.f, 0.5f),      Vec3(1.f, 0.f, 1.f),    Vec2(0.0f, 1.0f),       Vec3(0.f, 0.f, 1.f)},
+        {Vec3(0.f, 0.5f, 0.f),       Vec3(1.f, 1.f, 1.f),    Vec2(0.5f, 0.5f),       Vec3(0.f, 0.f, 1.f)}
     };
     unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
@@ -127,14 +127,14 @@ Pyramid::Pyramid() : Primitive() {
 
 Cube::Cube() : Primitive() {
     Vertex vertices[] = {
-        Vec3(-0.5f, -0.5f, 0.5f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f),Vec3(0.f, 0.f, 1.f), // 0
-        Vec3(0.5f, -0.5f, 0.5f), Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f),Vec3(0.f, 0.f, 1.f),  // 1
-        Vec3(0.5f, 0.5f, 0.5f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f),  // 2
-        Vec3(-0.5f, 0.5f, 0.5f), Vec3(1.0f, 1.0f, 0.0f), Vec2(0.0f, 1.0f),Vec3(0.f, 0.f, 1.f),  // 3
-        Vec3(-0.5f, -0.5f, -0.5f), Vec3(1.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f),// 4
-        Vec3(0.5f, -0.5f, -0.5f), Vec3(0.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f), // 5
-        Vec3(0.5f, 0.5f, -0.5f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f),  // 6
-        Vec3(-0.5f, 0.5f, -0.5f), Vec3(0.2f, 0.2f, 0.2f), Vec2(0.0f, 1.0f), Vec3(0.f, 0.f, 1.f)   // 7
+        {Vec3(-0.5f, -0.5f, 0.5f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f),Vec3(0.f, 0.f, 1.f)}, // 0
+        {Vec3(0.5f, -0.5f, 0.5f), Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f),Vec3(0.f, 0.f, 1.f)},  // 1
+        {Vec3(0.5f, 0.5f, 0.5f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f)},  // 2
+        {Vec3(-0.5f, 0.5f, 0.5f), Vec3(1.0f, 1.0f, 0.0f), Vec2(0.0f, 1.0f),Vec3(0.f, 0.f, 1.f)},  // 3
+        {Vec3(-0.5f, -0.5f, -0.5f), Vec3(1.0f, 0.0f, 1.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f)},// 4
+        {Vec3(0.5f, -0.5f, -0.5f), Vec3(0.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f)}, // 5
+        {Vec3(0.5f, 0.5f, -0.5f), Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f), Vec3(0.f, 0.f, 1.f)},  // 6
+        {Vec3(-0.5f, 0.5f, -0.5f), Vec3(0.2f, 0.2f, 0.2f), Vec2(0.0f, 1.0f), Vec3(0.f, 0.f, 1.f)}   // 7
     };
     unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
