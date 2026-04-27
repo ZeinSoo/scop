@@ -1,12 +1,15 @@
 #include "Texture.hpp"
 
+#include "Logger.hpp"
+
 Texture::Texture(const char *filePath, GLenum type) {
     this->type = type;
     unsigned char *imageData = loadTexture(filePath, &this->width, &this->height);
     if (!imageData) {
-        std::cout << "ERROR::TEXTURE::TEXTURE_LOADING_FAILED: " << filePath <<  std::endl;
+        Logger::log(std::string("ERROR::TEXTURE::TEXTURE_LOADING_FAILED: ") + filePath);
+        throw std::runtime_error("Failed to load texture");
     }
-
+    this->name = filePath;
     glGenTextures(1, &this->id);
     glBindTexture(GL_TEXTURE_2D, this->id);
 
@@ -37,16 +40,14 @@ void Texture::loadFromFile(const char *filePath) {
 
     unsigned char *imageData = loadTexture(filePath, &this->width, &this->height);
     if (!imageData) {
-        std::cout << "ERROR::TEXTURE::LOADFROMFILE::TEXTURE_LOADING_FAILED: " << filePath <<  std::endl;
+        Logger::log(std::string("ERROR::TEXTURE::LOADFROMFILE::TEXTURE_LOADING_FAILED: ") + filePath);
     }
 
+    this->name = filePath;
     glGenTextures(1, &this->id);
     glBindTexture(GL_TEXTURE_2D, this->id);
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    // glTexParameteri(this->type, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(this->type, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     glTexParameteri(this->type, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(this->type, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -65,10 +66,11 @@ GLuint Texture::getID() const {
     return this->id;
 }
 
-void Texture::bind(GLint texture_unit) {
-    // glActiveTexture(GL_TEXTURE0 + texture_unit);
-    // glBindTexture(type, this->id);
+std::string Texture::getName() const {
+    return this->name;
+}
 
+void Texture::bind(GLint texture_unit) {
     glBindTextureUnit(texture_unit, this->id);
 }
 

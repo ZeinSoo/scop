@@ -8,7 +8,9 @@ Material::Material(Vec3 Ka,
             int illum,
 
             GLint diffuseTex,
-            GLint specularTex)
+            GLint specularTex,
+            std::string name
+            )
         {
             this->Ka = Ka;
             this->Kd = Kd;
@@ -18,10 +20,23 @@ Material::Material(Vec3 Ka,
             this->illum = illum;
             this->diffuseTex = diffuseTex;
             this->specularTex = specularTex;
+            this->name = name;
         }
 
 Material::~Material() {
 
+}
+
+const std::string &Material::getName() const {
+    return this->name;
+}
+
+GLint Material::getDiffuseTexUnit() const {
+    return this->diffuseTex;
+}
+
+GLint Material::getSpecularTexUnit() const {
+    return this->specularTex;
 }
 
 void Material::sendToShader(Shader &program) {

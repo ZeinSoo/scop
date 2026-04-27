@@ -6,7 +6,6 @@
 #include <vector>
 #include "maths.hpp"
 
-
 class Primitive {
     private:
         std::vector<Vertex> vertices;
@@ -26,6 +25,11 @@ class Primitive {
 class Quad : public Primitive {
     public:
         Quad();
+};
+
+class Triangle : public Primitive {
+    public:
+        Triangle();
 };
 
 class Pyramid : public Primitive {

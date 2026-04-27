@@ -12,6 +12,7 @@
 class Texture {
     private:
         GLuint id;
+        std::string name;
         int width;
         int height;
         unsigned int type;
@@ -20,8 +21,10 @@ class Texture {
         Texture(const char *filePath, GLenum type);
         ~Texture();
         void loadFromFile(const char *filePath);
+
         GLuint getID() const;
+        std::string getName() const;
+
         void bind(GLint texture_unit);
         void unbind();
-
 };

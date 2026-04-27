@@ -12,7 +12,6 @@ struct Material {
     sampler2D specularTex;
 };
 
-
 in vec3 vs_position;
 in vec3 vs_color;
 in vec2 vs_texcoord;
@@ -20,15 +19,15 @@ in vec3 vs_normal;
 
 out vec4 fs_color;
 
-
 // Uniforms
 uniform Material material;
 
 uniform vec3 lightPos0;
 uniform vec3 cameraPos;
 
-uniform int u_debugTexture;
-uniform int u_debugColor;
+uniform int u_useTexture;
+uniform int u_renderMode;
+uniform int u_debugLight;
 
 
 // Functions
@@ -40,7 +39,6 @@ vec3 calculateAmbient(Material mat, vec3 Ia) {
 vec3 calculateDiffuse(Material mat, vec3 N, vec3 L) {
     float NdotL = max(dot(N, L), 0.0);
     return mat.Kd * NdotL;
-
 }
 
 vec3 calculateSpecular(Material mat, vec3 N, vec3 L, vec3 V) {
@@ -72,21 +70,17 @@ void light() {
     vec3 specularFinal = calculateSpecular(material, N, L, V);
 
     vec3 rgb = ambientFinal + diffuseFinal + specularFinal;
-    fs_color = vec4(rgb, material.d) * texture(material.diffuseTex, vs_texcoord);
+    if (u_renderMode == 0 && u_debugLight == 1)
+        fs_color = vec4(rgb, material.d) * texture(material.diffuseTex, vs_texcoord);
+    else if (u_renderMode == 0 && u_debugLight == 0)
+        fs_color = texture(material.diffuseTex, vs_texcoord);
+    else if (u_renderMode == 1 && u_debugLight == 1)
+        fs_color = vec4(rgb, material.d) * vec4(vs_color, 1.0);
+    else if (u_renderMode == 1 && u_debugLight == 0)
+        fs_color = vec4(vs_color, 1.0);
 }
 
 // Source : https://en.wikipedia.org/wiki/Phong_reflection_model
 void main() {
-
-    if (u_debugTexture != 0) {
-        fs_color = texture(material.diffuseTex, vs_texcoord);
-        return;
-    }
-    else if (u_debugColor != 0) {
-        fs_color = vec4(vs_color, 1.0);
-        return;
-    }
-    else {
-        light();
-    }
+    light();
 }

@@ -1,5 +1,8 @@
 #include "../incs/Shader.hpp"
 
+#include "Logger.hpp"
+#include "Shader.hpp"
+
 Shader::Shader(const char *vertexFile, const char *fragmentFile, const char *geometryFile) {
     GLuint vertexShader, fragmentShader, geometryShader = 0;
 
@@ -30,7 +33,7 @@ std::string Shader::loadShaderSource(const char *filePath) {
         while (std::getline(in_file, temp))
             src += temp + "\n";
     } else {
-        std::cout << "ERROR::SHADERS::COULD_NOT_OPEN_FILE: " << filePath << std::endl;
+           Logger::log(std::string("ERROR::SHADERS::COULD_NOT_OPEN_FILE: ") + filePath);
     }
     in_file.close();
 
@@ -51,7 +54,7 @@ GLuint Shader::loadShader(GLenum type, const char *filePath) {
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(shader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADERS::COULD_NOT_COMPILE_SHADER: " << filePath << '\n' << infoLog << std::endl;
+           Logger::log(std::string("ERROR::SHADERS::COULD_NOT_COMPILE_SHADER: ") + filePath + "\n" + infoLog);
     }
 
     return shader;
@@ -75,7 +78,7 @@ void Shader::linkProgram(GLuint vertexShader, GLuint fragmentShader, GLuint geom
     glGetProgramiv(this->id, GL_LINK_STATUS, &success);
     if (!success) {
         glGetProgramInfoLog(this->id, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADERS::COULD_NOT_LINK_PROGRAM\n" << infoLog << std::endl;
+            Logger::log(std::string("ERROR::SHADERS::COULD_NOT_LINK_PROGRAM\n") + infoLog);
     }
 
     unuse();
@@ -112,7 +115,8 @@ void Shader::set1i(GLint value, const GLchar *name) const {
         glProgramUniform1i(this->id, location, value);
 }
 
-void Shader::set1f(GLfloat value, const GLchar *name) const {
+void Shader::set1f(GLfloat value, const GLchar *name) const
+{
     const GLint location = glGetUniformLocation(this->id, name);
     if (location != -1)
         glProgramUniform1f(this->id, location, value);

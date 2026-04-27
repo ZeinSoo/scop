@@ -8,6 +8,8 @@
 
 class Material {
     private:
+        std::string name;
+
         Vec3 Ka; // Ambient reflectivity
         Vec3 Kd; // Diffuse reflectivity
         Vec3 Ks; // Specular reflectivity
@@ -26,8 +28,13 @@ class Material {
             int illum,
 
             GLint diffuseTex,
-            GLint specularTex);
+            GLint specularTex,
+            std::string name = "Undefined");
         ~Material();
+
+        const std::string &getName() const;
+        GLint getDiffuseTexUnit() const;
+        GLint getSpecularTexUnit() const;
         
         void sendToShader(Shader &program);
 };

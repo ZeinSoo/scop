@@ -68,6 +68,29 @@ Quad::Quad() : Primitive() {
 
 ///////////////////////////////////////////
 ///////                             ///////
+///////           TRIANGLE          ///////
+///////                             ///////
+///////////////////////////////////////////
+
+Triangle::Triangle() : Primitive() {
+    Vertex vertices[] = {
+        Vec3(-0.5f, -0.5f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
+        Vec3(0.5f, -0.5f, 0.0f),  Vec3(0.0f, 1.0f, 0.0f), Vec2(1.0f, 0.0f), Vec3(0.f, 0.f, 1.f),
+        Vec3(0.0f, 0.5f, 0.0f),   Vec3(0.0f, 0.0f, 1.0f), Vec2(0.5f, 1.0f), Vec3(0.f, 0.f, 1.f)
+    };
+    unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
+
+    GLuint indices[] = {
+        0, 1, 2
+    };
+    unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
+
+    this->set(vertices, nrOfVertices, indices, nrOfIndices);
+}
+
+
+///////////////////////////////////////////
+///////                             ///////
 ///////           PYRAMID           ///////
 ///////                             ///////
 ///////////////////////////////////////////

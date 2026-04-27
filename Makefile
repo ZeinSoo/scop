@@ -5,9 +5,9 @@
 NAME        = scop
 
 CXX         = c++
-CFLAGS      = -Wall -Wextra -Werror -g3 -MMD -MP -std=c++20 ##-DGLM_ENABLE_EXPERIMENTAL
+CFLAGS      = -Wall -Wextra -Werror -g3 -MMD -MP -std=c++20 
 
-INCLUDES    = -Iincs -Iincs/loaders -Iincs/objects -Ilibs/include ##-Iglm
+INCLUDES    = -Iincs -Iincs/loaders -Iincs/objects -Ilibs/include
 
 SRCDIR      = srcs/
 OBJDIR      = .obj/
@@ -15,9 +15,14 @@ OBJDIR      = .obj/
 SRCS        = 	loaders/BMPLoader.cpp\
 				loaders/OBJLoader.cpp\
 				main.cpp\
-				Engine.cpp\
+				Logger.cpp\
+				ConsoleMenu.cpp\
 				Shader.cpp\
 				maths.cpp\
+				engine/Engine.cpp\
+				engine/Engine.init.cpp\
+				engine/Engine.update.cpp\
+				engine/Engine.utils.cpp\
 				objects/Material.cpp\
 				objects/Mesh.cpp\
 				objects/Primitives.cpp\
@@ -25,6 +30,8 @@ SRCS        = 	loaders/BMPLoader.cpp\
 
 OBJS        = $(addprefix $(OBJDIR), $(SRCS:.cpp=.o))
 DEPS        = $(OBJS:.o=.d)
+
+MAKEFILE := Makefile
 
 LIBDIR      = libs
 DEPSDIR     = deps
@@ -49,7 +56,7 @@ $(NAME): $(OBJS)
 #                             COMPILATION C++                                  #
 # **************************************************************************** #
 
-$(OBJDIR)%.o: $(SRCDIR)%.cpp
+$(OBJDIR)%.o: $(SRCDIR)%.cpp $(MAKEFILE)
 	mkdir -p $(dir $@)
 	$(CXX) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

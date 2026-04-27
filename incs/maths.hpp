@@ -60,7 +60,6 @@ struct Vec3 {
         this->z -= scalar;
         return *this;
     }
-
 };
 
 struct Vertex {

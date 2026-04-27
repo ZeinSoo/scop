@@ -1,7 +1,8 @@
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+
+#include "Logger.hpp"
 
 static unsigned int read_u32_le(const u_int8_t *buf) {
     return static_cast<unsigned int>(buf[0]) |
@@ -17,7 +18,7 @@ static int read_i32_le(const u_int8_t *buf) {
 unsigned char *loadTexture(const char *filePath, int *width, int *height) {
     std::ifstream file(filePath, std::ios::binary);
     if (!file) {
-        std::cout << "ERROR::BMPLOADER::COULD_NOT_OPEN_FILE: " << filePath << std::endl;
+        Logger::log(std::string("ERROR::BMPLOADER::COULD_NOT_OPEN_FILE: ") + filePath);
         return NULL;
     }
 
@@ -28,18 +29,18 @@ unsigned char *loadTexture(const char *filePath, int *width, int *height) {
     file.read(reinterpret_cast<char *>(infoHeader), sizeof(infoHeader));
 
     if (!file) {
-        std::cout << "ERROR::BMPLOADER::FILE_READ_ERROR: " << filePath << std::endl;
+        Logger::log(std::string("ERROR::BMPLOADER::FILE_READ_ERROR: ") + filePath);
         return NULL;
     }
 
     if (fileHeader[0] != 'B' || fileHeader[1] != 'M') {
-        std::cout << "ERROR::BMPLOADER::NOT_A_BMP_FILE: " << filePath << std::endl;
+        Logger::log(std::string("ERROR::BMPLOADER::NOT_A_BMP_FILE: ") + filePath);
         return NULL;
     }
 
     u_int8_t bpp = infoHeader[14];
     if (bpp != 24 && bpp != 32) {
-        std::cout << "ERROR::BMPLOADER::UNSUPPORTED_BPP " << std::endl;
+        Logger::log("ERROR::BMPLOADER::UNSUPPORTED_BPP");
         return NULL;
     }
 
@@ -49,7 +50,7 @@ unsigned char *loadTexture(const char *filePath, int *width, int *height) {
     const int absH = (hSigned < 0) ? -hSigned : hSigned;
     const bool bmpTopDown = (hSigned < 0);
     if (w <= 0 || absH <= 0) {
-        std::cout << "ERROR::BMPLOADER::INVALID_DIMENSIONS" << std::endl;
+        Logger::log("ERROR::BMPLOADER::INVALID_DIMENSIONS");
         return NULL;
     }
 
@@ -62,7 +63,7 @@ unsigned char *loadTexture(const char *filePath, int *width, int *height) {
 
     file.seekg(pixelOffset, std::ios::beg);
     if (!file) {
-        std::cout << "ERROR::BMPLOADER::INVALID_PIXEL_OFFSET" << std::endl;
+        Logger::log("ERROR::BMPLOADER::INVALID_PIXEL_OFFSET");
         return NULL;
     }
 
@@ -77,7 +78,7 @@ unsigned char *loadTexture(const char *filePath, int *width, int *height) {
             u_int8_t bgrx[4] = {0, 0, 0, 255};
             file.read(reinterpret_cast<char *>(bgrx), bytesPerPixel);
             if (!file) {
-                std::cout << "ERROR::BMPLOADER::FILE_READ_ERROR: " << filePath << std::endl;
+                Logger::log(std::string("ERROR::BMPLOADER::FILE_READ_ERROR: ") + filePath);
                 delete[] data;
                 return NULL;
             }
@@ -90,6 +91,5 @@ unsigned char *loadTexture(const char *filePath, int *width, int *height) {
         if (padding)
             file.ignore(padding);
     }
-
     return data;
 }

@@ -2,10 +2,12 @@
 
 Mesh::Mesh(Vertex *vertexArray, const unsigned &nrOfVertices,
             GLuint* indexArray, const unsigned &nrOfIndices,
+            std::string name,
             Vec3 position,
             Vec3 rotation,
             Vec3 scale)
 {
+    this->name = name;
     this->position = position;
     this->rotation = rotation;
     this->scale = scale;
@@ -15,10 +17,12 @@ Mesh::Mesh(Vertex *vertexArray, const unsigned &nrOfVertices,
 }
 
 Mesh::Mesh(Primitive *primitive,
+            std::string name,
             Vec3 position,
             Vec3 rotation,
             Vec3 scale)
 {
+    this->name = name;
     this->position = position;
     this->rotation = rotation;
     this->scale = scale;
@@ -28,14 +32,16 @@ Mesh::Mesh(Primitive *primitive,
 }
 
 Mesh::Mesh(const Primitive &primitive,
+            std::string name,
             Vec3 position,
             Vec3 rotation,
             Vec3 scale)
 {
+    this->name = name;
     this->position = position;
     this->rotation = rotation;
     this->scale = scale;
-
+    
     this->initVAO(primitive);
     this->updateModelMatrix();
 }
@@ -45,6 +51,10 @@ Mesh::~Mesh() {
     glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(1, &this->VBO);
     glDeleteBuffers(1, &this->EBO);
+}
+
+std::string Mesh::getName() const {
+    return this->name;
 }
 
 const Vec3 &Mesh::getPosition() const {
@@ -57,6 +67,26 @@ const Vec3 &Mesh::getRotation() const {
 
 const Vec3 &Mesh::getScale() const {
     return this->scale;
+}
+
+const std::string &Mesh::getMaterialName() const {
+    return this->renderState.materialName;
+}
+
+const std::string Mesh::getTextureName() const {
+    return this->renderState.textureName;
+}
+
+GLenum Mesh::getDrawMode() const {
+    return this->renderState.drawMode;
+}
+
+bool Mesh::getDebugLight() const{
+    return this->renderState.debugLight;
+}
+
+bool Mesh::getCullingMode() const {
+    return this->renderState.culling;
 }
 
 void Mesh::initVAO(Vertex *vertexArray, const unsigned &nrOfVertices, 
@@ -214,6 +244,34 @@ void Mesh::setScale(const Vec3 scale) {
     this->scale = scale;
 }
 
+void Mesh::setMaterial(const std::string &materialName) {
+    this->renderState.materialName = materialName;
+}
+
+void Mesh::setTexture(std::string textureName) {
+    this->renderState.textureName = textureName;
+}
+
+void Mesh::setDrawMode(const GLenum drawMode) {
+    this->renderState.drawMode = drawMode;
+}
+
+int Mesh::getRenderMode() const {
+    return this->renderState.renderMode;
+}
+
+void Mesh::setRenderMode(const int renderMode) {
+    this->renderState.renderMode = renderMode;
+}
+
+void Mesh::setDebugLight(bool enabled) {
+    this->renderState.debugLight = enabled;
+}
+
+void Mesh::setCullingMode(bool enabled) {
+    this->renderState.culling = enabled;
+}
+
 void Mesh::move(const Vec3 translation) {
     this->position = this->position + translation;
 }
@@ -230,10 +288,6 @@ void Mesh::rotate(const Vec3 rotation) {
 
 void Mesh::scaleUp(const Vec3 scale) {
     this->scale = this->scale + scale;
-}
-
-void Mesh::update() {
-
 }
 
 void Mesh::render(Shader *shader, GLenum drawMode) {
@@ -259,7 +313,6 @@ void Mesh::render(Shader *shader, const Mat4 &modelMatrix, GLenum drawMode) {
     shader->use();
 
     glBindVertexArray(this->VAO);
-
     glPolygonMode(GL_FRONT_AND_BACK, drawMode);
     if (nrOfIndices == 0) {
         glDrawArrays(GL_TRIANGLES, 0, this->nrOfVertices);
